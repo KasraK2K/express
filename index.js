@@ -1,10 +1,20 @@
 const express = require('express')
 const app = express()
 
-app.get('*', (req, res) => {
-    res.write('<h1><marquee direction=right>Hello from Express path `/` on Now 2.0!</marquee></h1>')
-    res.write('<h2>Go to <a href="/about">/about</a></h2>')
-    res.end()
-})
+app.set('port', process.env.PORT || 3000);
 
-module.exports = app
+app.get('/', function(req, res) {
+    res.send(`
+        <h1>you are in home page</h1>
+        <p>we did not export any module</p>
+    `);
+}); //home
+
+app.get('/:anyRoute', function(req, res) {
+    res.send(`
+        <h1>you are in ${req.params.anyRoute} page</h1>
+        <p>we did not export any module in ${req.params.anyRoute}</p>
+    `);
+}); //any route
+
+var server = app.listen(app.get('port'), console.log(`express in running at port ` + app.get('port')));
